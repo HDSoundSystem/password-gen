@@ -21,9 +21,8 @@ let currentLang = localStorage.getItem('lang') || 'fr';
 let fontSizeMultiplier = parseFloat(localStorage.getItem('fontSize')) || 1.0;
 let isHighContrast = localStorage.getItem('contrast') === 'true';
 let passwordHistory = [];
-let isPasswordVisible = true;
 
-// --- ACCESSIBILITÉ ---
+// --- ACCESSIBILITÉ & PERSISTANCE ---
 function applyFontSize() {
     document.documentElement.style.fontSize = (fontSizeMultiplier * 16) + 'px';
     localStorage.setItem('fontSize', fontSizeMultiplier);
@@ -39,18 +38,7 @@ document.getElementById('font-increase').onclick = () => { if(fontSizeMultiplier
 document.getElementById('font-decrease').onclick = () => { if(fontSizeMultiplier > 0.8) { fontSizeMultiplier -= 0.1; applyFontSize(); }};
 document.getElementById('contrast-toggle').onchange = (e) => { isHighContrast = e.target.checked; applyContrast(); };
 
-// --- UI & THEME ---
-const updateThemeIcon = (theme) => {
-    document.getElementById('theme-icon').className = theme === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
-};
-
-document.getElementById('dark-mode-btn').onclick = () => {
-    const newTheme = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-bs-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
-};
-
+// --- UI & LANGUES ---
 function updateUI() {
     const t = translations[currentLang];
     const ids = ['title', 'length', 'lowercase', 'uppercase', 'numbers', 'symbols', 'ambiguous', 'history', 'accessibility', 'textSize', 'contrast'];
@@ -63,9 +51,7 @@ function updateUI() {
     
     const currentPass = document.getElementById('password-display').innerText;
     if (!currentPass.includes('*')) updateStrength(currentPass);
-    
-    // Forcer le rendu de l'historique pour traduire le bouton "Vider"
-    renderHistory(); 
+    renderHistory(); // Re-rend l'historique pour traduire le bouton "Vider"
 }
 
 document.getElementById('lang-btn').onclick = () => {
@@ -74,12 +60,22 @@ document.getElementById('lang-btn').onclick = () => {
     updateUI();
 };
 
-// --- CORE ---
+const updateThemeIcon = (theme) => {
+    document.getElementById('theme-icon').className = theme === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+};
+
+document.getElementById('dark-mode-btn').onclick = () => {
+    const newTheme = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-bs-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+};
+
+// --- CORE LOGIC ---
 function renderHistory() {
     const list = document.getElementById('history-list');
     if (passwordHistory.length === 0) { list.innerHTML = ""; return; }
     
-    // Ici, on utilise translations[currentLang].clear pour que ce soit toujours à jour
     list.innerHTML = passwordHistory.map(p => `
         <div class="history-item" onclick="navigator.clipboard.writeText('${p}')">
             <span class="text-truncate" style="max-width: 80%">${p}</span><i class="bi bi-copy"></i>
@@ -89,10 +85,7 @@ function renderHistory() {
             <i class="bi bi-trash3"></i> ${translations[currentLang].clear}
         </button>`;
         
-    document.getElementById('clear-h').onclick = () => { 
-        passwordHistory = []; 
-        renderHistory(); 
-    };
+    document.getElementById('clear-h').onclick = () => { passwordHistory = []; renderHistory(); };
 }
 
 function updateStrength(p) {
