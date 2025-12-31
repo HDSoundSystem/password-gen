@@ -1,13 +1,13 @@
 const translations = {
     fr: { 
-        title: "Générateur Pro", length: "Longueur", lowercase: "Minuscules",
-        uppercase: "Majuscules", numbers: "Chiffres", symbols: "Symboles",
-        ambiguous: "Exclure ambigus", btn: "Générer", history: "Historique", error: "Option requise"
+        title: "Générateur Pro", length: "Longueur", lowercase: "Minuscules (abc)",
+        uppercase: "Majuscules (ABC)", numbers: "Chiffres (0-9)", symbols: "Symboles (@#$!)",
+        ambiguous: "Exclure ambigus (i, l, 1, 0, o)", btn: "Générer", history: "Historique", error: "Option requise"
     },
     en: { 
-        title: "Pro Generator", length: "Length", lowercase: "Lowercase",
-        uppercase: "Uppercase", numbers: "Numbers", symbols: "Symbols",
-        ambiguous: "Exclude Ambiguous", btn: "Generate", history: "History", error: "Option required"
+        title: "Pro Generator", length: "Length", lowercase: "Lowercase (abc)",
+        uppercase: "Uppercase (ABC)", numbers: "Numbers (0-9)", symbols: "Symbols (@#$!)",
+        ambiguous: "Exclude Ambiguous (i, l, 1, 0, o)", btn: "Generate", history: "History", error: "Option required"
     }
 };
 
@@ -120,4 +120,5 @@ document.getElementById('copy-btn').onclick = () => {
         icon.classList.replace('bi-clipboard', 'bi-check-lg');
         setTimeout(() => icon.classList.replace('bi-check-lg', 'bi-clipboard'), 1500);
     });
+
 };
