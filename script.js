@@ -1,11 +1,11 @@
 const translations = {
     fr: { 
-        title: "Générateur Pro", length: "Longueur", lowercase: "Minuscules (abc)",
+        title: "Password GEN", length: "Longueur", lowercase: "Minuscules (abc)",
         uppercase: "Majuscules (ABC)", numbers: "Chiffres (0-9)", symbols: "Symboles (@#$!)",
         ambiguous: "Exclure ambigus (i, l, 1, 0, o)", btn: "Générer", history: "Historique", error: "Option requise"
     },
     en: { 
-        title: "Pro Generator", length: "Length", lowercase: "Lowercase (abc)",
+        title: "Password GEN", length: "Length", lowercase: "Lowercase (abc)",
         uppercase: "Uppercase (ABC)", numbers: "Numbers (0-9)", symbols: "Symbols (@#$!)",
         ambiguous: "Exclude Ambiguous (i, l, 1, 0, o)", btn: "Generate", history: "History", error: "Option required"
     }
@@ -122,3 +122,4 @@ document.getElementById('copy-btn').onclick = () => {
     });
 
 };
+
