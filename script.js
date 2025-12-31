@@ -1,37 +1,50 @@
 const translations = {
     fr: { 
-        title: "Password GEN", length: "Longueur", lowercase: "Minuscules (abc)",
-        uppercase: "Majuscules (ABC)", numbers: "Chiffres (0-9)", symbols: "Symboles (@#$!)",
+        title: "Password GEN", length: "Longueur", lowercase: "Minuscules",
+        uppercase: "Majuscules", numbers: "Chiffres", symbols: "Symboles",
         ambiguous: "Exclure ambigus", btn: "Générer", history: "Historique", 
         error: "Option requise", clear: "Vider l'historique", crack: "Temps pour craquer : ",
-        accessibility: "Accessibilité", textSize: "Taille du texte",
+        accessibility: "Accessibilité", textSize: "Taille du texte", contrast: "Contraste élevé",
         units: { sec: "sec", min: "min", hours: "heures", days: "jours", years: "ans", centuries: "Siècles 🛡️" }
     },
     en: { 
-        title: "Password GEN", length: "Length", lowercase: "Lowercase (abc)",
-        uppercase: "Uppercase (ABC)", numbers: "Numbers (0-9)", symbols: "Symbols (@#$!)",
+        title: "Password GEN", length: "Length", lowercase: "Lowercase",
+        uppercase: "Uppercase", numbers: "Numbers", symbols: "Symbols",
         ambiguous: "Exclude Ambiguous", btn: "Generate", history: "History", 
         error: "Option required", clear: "Clear History", crack: "Time to crack: ",
-        accessibility: "Accessibility", textSize: "Text Size",
+        accessibility: "Accessibility", textSize: "Text Size", contrast: "High Contrast",
         units: { sec: "sec", min: "min", hours: "hours", days: "days", years: "years", centuries: "Centuries 🛡️" }
     }
 };
 
+// --- INITIALISATION ---
 let currentLang = localStorage.getItem('lang') || 'fr';
 let fontSizeMultiplier = parseFloat(localStorage.getItem('fontSize')) || 1.0;
+let isHighContrast = localStorage.getItem('contrast') === 'true';
 let passwordHistory = [];
 let isPasswordVisible = true;
 
-// --- ACCESSIBILITÉ TAILLE TEXTE ---
+// --- FONCTIONS ACCESSIBILITÉ ---
 function applyFontSize() {
     document.documentElement.style.fontSize = (fontSizeMultiplier * 16) + 'px';
     localStorage.setItem('fontSize', fontSizeMultiplier);
 }
 
+function applyContrast() {
+    if (isHighContrast) {
+        document.body.classList.add('high-contrast');
+    } else {
+        document.body.classList.remove('high-contrast');
+    }
+    document.getElementById('contrast-toggle').checked = isHighContrast;
+    localStorage.setItem('contrast', isHighContrast);
+}
+
 document.getElementById('font-increase').onclick = () => { if(fontSizeMultiplier < 1.4) { fontSizeMultiplier += 0.1; applyFontSize(); }};
 document.getElementById('font-decrease').onclick = () => { if(fontSizeMultiplier > 0.8) { fontSizeMultiplier -= 0.1; applyFontSize(); }};
+document.getElementById('contrast-toggle').onchange = (e) => { isHighContrast = e.target.checked; applyContrast(); };
 
-// --- GESTION DU THÈME ---
+// --- THÈME & TRADUCTION ---
 const updateThemeIcon = (theme) => {
     document.getElementById('theme-icon').className = theme === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
 };
@@ -43,7 +56,6 @@ document.getElementById('dark-mode-btn').onclick = () => {
     updateThemeIcon(newTheme);
 };
 
-// --- TRADUCTION ---
 function updateUI() {
     const t = translations[currentLang];
     document.getElementById('ui-title').innerText = t.title;
@@ -57,6 +69,7 @@ function updateUI() {
     document.getElementById('ui-history').innerText = t.history;
     document.getElementById('ui-accessibility').innerText = t.accessibility;
     document.getElementById('ui-text-size').innerText = t.textSize;
+    document.getElementById('ui-contrast').innerText = t.contrast;
     document.getElementById('lang-btn').innerText = currentLang === 'fr' ? 'EN' : 'FR';
     
     const currentPass = document.getElementById('password-display').innerText;
@@ -143,7 +156,6 @@ document.getElementById('generate-btn').onclick = () => {
     renderHistory(); updateStrength(password);
 };
 
-// Visibilité
 document.getElementById('visibility-toggle').onclick = () => {
     isPasswordVisible = !isPasswordVisible;
     document.getElementById('password-display').classList.toggle('password-hidden');
@@ -161,9 +173,10 @@ document.getElementById('copy-btn').onclick = () => {
     setTimeout(() => i.className = 'bi bi-clipboard', 1500);
 };
 
-// Init
+// --- INIT ---
 window.onload = () => {
     applyFontSize();
+    applyContrast();
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-bs-theme', savedTheme);
     updateThemeIcon(savedTheme);
@@ -171,5 +184,4 @@ window.onload = () => {
     document.getElementById('generate-btn').click();
 };
 
-// Accessibilité clavier
 document.body.addEventListener('keydown', (e) => { if (e.key === 'Tab') document.body.classList.add('using-keyboard'); });
