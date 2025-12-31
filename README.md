@@ -81,3 +81,5 @@ The app now adapts to all user profiles:
 A **14-character** password mixing all types is exponentially harder to crack than a complex 10-character password. Length is your best defense!
 
 ---
+
+![image](https://github.com/user-attachments/assets/d2653a08-6fd2-47ca-9349-d6deda641cbb)
