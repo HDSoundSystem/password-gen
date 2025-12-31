@@ -16,11 +16,28 @@
     --acc-bg: #2d2d2d;
 }
 
+/* --- MODE CONTRASTE ÉLEVÉ --- */
+.high-contrast {
+    --bg-body: #000000 !important;
+    --bg-card: #000000 !important;
+    --text-main: #ffffff !important;
+    --bg-result: #000000 !important;
+    --border: #ffffff !important;
+    --acc-bg: #000000 !important;
+}
+
+.high-contrast .card { border: 2px solid #fff !important; }
+.high-contrast .result-box { border: 2px solid #ffff00 !important; }
+.high-contrast #password-display { color: #ffff00 !important; }
+.high-contrast .btn-primary { background-color: #ffff00 !important; color: #000 !important; border: none !important; }
+.high-contrast .progress { border: 1px solid #fff; }
+.high-contrast .form-check-input:checked { background-color: #ffff00 !important; border-color: #ffff00 !important; }
+
 body { 
     min-height: 100vh; 
     background-color: var(--bg-body); 
     color: var(--text-main); 
-    transition: background-color 0.3s ease, color 0.3s ease; 
+    transition: background-color 0.2s, color 0.2s; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
@@ -28,7 +45,6 @@ body {
 }
 
 .main-wrapper { max-width: 950px; width: 100%; }
-
 .card { background-color: var(--bg-card) !important; border-radius: 24px; }
 
 .result-box { 
@@ -39,7 +55,6 @@ body {
     min-height: 72px; 
     display: flex; 
     align-items: center; 
-    justify-content: space-between; 
 }
 
 #password-display { 
@@ -49,11 +64,9 @@ body {
     overflow-x: auto; 
     scrollbar-width: none; 
     flex-grow: 1; 
-    margin-right: 10px; 
 }
 
 .password-hidden { -webkit-text-security: disc; text-security: disc; }
-
 .accessibility-panel { background-color: var(--acc-bg); }
 
 .history-item { 
@@ -63,13 +76,10 @@ body {
     border-bottom: 1px solid var(--border); 
     display: flex; 
     justify-content: space-between; 
-    opacity: 0.8;
 }
 
-.history-item:hover { opacity: 1; color: #0d6efd; }
-
 .using-keyboard *:focus {
-    outline: 3px solid #0d6efd !important;
+    outline: 4px solid #ff0000 !important;
     outline-offset: 2px;
 }
 
