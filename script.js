@@ -178,6 +178,22 @@ function renderHistory() {
     document.getElementById('clear-h').onclick = () => { passwordHistory = []; renderHistory(); };
 }
 
+function savePreference(key, value) {
+    localStorage.setItem(key, value);
+    
+    // Envoyer la préférence à Google Analytics
+    if (typeof gtag === 'function') {
+        gtag('event', 'user_preference_change', {
+            'preference_type': key,
+            'preference_value': value
+        });
+    }
+
+    if (key === 'user_theme') {
+        document.body.className = value;
+    }
+}
+
 document.getElementById('qr-toggle').onclick = () => document.getElementById('qr-container').classList.toggle('d-none');
 document.getElementById('length-slider').oninput = (e) => document.getElementById('length-val').innerText = e.target.value;
 
