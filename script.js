@@ -148,7 +148,11 @@ document.getElementById('visibility-toggle').onclick = () => {
     icon.classList.toggle('bi-eye'); icon.classList.toggle('bi-eye-slash');
 };
 
-document.getElementById('lang-btn').onclick = () => { currentLang = currentLang === 'fr' ? 'en' : 'fr'; localStorage.setItem('lang', currentLang); updateUI(); };
+document.getElementById('lang-btn').onclick = () => { 
+    currentLang = currentLang === 'fr' ? 'en' : 'fr'; 
+    localStorage.setItem('lang', currentLang); updateUI(); 
+};
+
 document.getElementById('dark-mode-btn').onclick = () => {
     const t = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-bs-theme', t);

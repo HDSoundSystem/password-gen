@@ -1,0 +1,19 @@
+{
+  "short_name": "PassGen",
+  "name": "Password GEN Pro",
+  "description": "Générateur de mots de passe sécurisé et accessible.",
+  "icons": [
+    {
+      "src": "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/icons/shield-lock-fill.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#0d6efd",
+  "background_color": "#ffffff",
+  "lang": "fr-FR",
+  "orientation": "portrait"
+}
