@@ -23,6 +23,7 @@ The application uses **Shannon Entropy** to measure the true complexity and unpr
 
 **The formula used:**
 
+### 2. Crack Time Estimation
 
 Where:
 
