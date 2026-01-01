@@ -3,13 +3,12 @@
   "name": "Password GEN Pro",
   "description": "Générateur de mots de passe sécurisé et accessible.",
   "icons": [
-    {
-      "src": "img/ico.png",
-      "type": "image/svg+xml",
-      "sizes": "512x512",
-      "purpose": "any maskable"
-    }
-  ],
+  {
+    "src": "img/ico.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }
+],
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#0d6efd",
