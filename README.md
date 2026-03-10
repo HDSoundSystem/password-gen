@@ -139,7 +139,3 @@ Here are some features we'd love to see:
 * [ ] **Custom Character Sets**: Allow users to type specific symbols they want to include.
 * [ ] **Bulk Generation**: Generate 50 passwords at once and export them to CSV.
 
----
-### DEMO
-<img width="200" height="200" alt="Qq118UGqZsFzp33" src="https://github.com/user-attachments/assets/34fee322-08d5-4fbc-ae28-2d5d790ec38e" />
-
