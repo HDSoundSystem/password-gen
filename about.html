@@ -6,15 +6,78 @@
     <title>About - Password Generator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        .license-box {
-            font-family: monospace; font-size: 0.8rem; background-color: rgba(0,0,0,0.03);
-            border-radius: 8px; padding: 15px; max-height: 200px; overflow-y: auto;
-            white-space: pre-wrap; border: 1px solid var(--border);
-        }
-        [data-bs-theme="dark"] .license-box { background-color: rgba(255,255,255,0.03); }
         .feature-icon { font-size: 1.5rem; color: #0d6efd; }
+
+        #license-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            width: min(520px, 92vw);
+            user-select: none;
+        }
+
+        #license-popup-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            cursor: grab;
+            border-bottom: 1px solid var(--border);
+            border-radius: 16px 16px 0 0;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--label);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #license-popup-header:active { cursor: grabbing; }
+
+        #license-popup-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-main);
+            font-size: 1rem;
+            padding: 0;
+            line-height: 1;
+        }
+
+        #license-popup-body {
+            padding: 16px;
+            font-family: monospace;
+            font-size: 0.78rem;
+            white-space: pre-wrap;
+            max-height: 55vh;
+            overflow-y: auto;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        #license-popup-body::-webkit-scrollbar { width: 5px; }
+        #license-popup-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        #license-link {
+            cursor: pointer;
+            color: #0d6efd;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: inherit;
+            font-weight: 600;
+        }
+
+        [data-bs-theme="dark"] #license-link { color: #6db1ff; }
     </style>
 </head>
 <body>
@@ -23,7 +86,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-11 col-lg-9">
             <div class="card p-4 shadow-lg border-0">
-                
+
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <a href="index.html" class="btn btn-sm btn-outline-primary" id="ui-back">
                         <i class="bi bi-arrow-left"></i> Retour
@@ -37,8 +100,9 @@
                 </div>
 
                 <div class="text-center mb-5">
-                    <h1 class="h4 text-center mb-4 fw-bold d-flex align-items-center justify-content-center" id="">
-                    <img src="img/logo.png" alt="Icon" style="width: 50px; height: 50px;" class="me-2"></h1>
+                    <h1 class="h4 text-center mb-4 fw-bold d-flex align-items-center justify-content-center">
+                        <img src="img/logo.png" alt="Icon" style="width: 50px; height: 50px;" class="me-2">
+                    </h1>
                     <h1 class="h3 fw-bold" id="ui-aboutTitle">À Propos de Password Generator</h1>
                     <p class="text-muted" id="ui-subtitle">Un outil complet, sécurisé et accessible.</p>
                 </div>
@@ -76,10 +140,28 @@
                     </div>
                 </div>
 
-                <div class="mt-4">
-                    <h5 class="fw-bold mb-3"><i class="bi bi-file-earmark-text me-2"></i>MIT License</h5>
-                    <div class="license-box">
-MIT License
+                <div class="mt-4 text-center">
+                    <p class="small text-muted mb-0">
+                        Distribué sous licence
+                        <button id="license-link"><i class="bi bi-file-earmark-text me-1"></i>MIT License</button>
+                    </p>
+                </div>
+
+                <div class="text-center mt-5">
+                    <p class="small text-muted mb-0" id="ui-footer">© 2026 Yohann Zaoui • Password Generator</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- License Popup draggable -->
+<div id="license-popup">
+    <div id="license-popup-header">
+        <span><i class="bi bi-file-earmark-text me-1"></i>MIT License</span>
+        <button id="license-popup-close"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div id="license-popup-body">MIT License
 
 Copyright (c) 2026 Yohann Zaoui
 
@@ -99,16 +181,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-                    </div>
-                </div>
-
-                <div class="text-center mt-5">
-                    <p class="small text-muted mb-0" id="ui-footer">© 2026 Yohann Zaoui • Password Generator</p>
-                </div>
-            </div>
-        </div>
-    </div>
+SOFTWARE.</div>
 </div>
 
 <script>
@@ -168,6 +241,60 @@ SOFTWARE.
         localStorage.setItem('lang', currentLang);
         updateUI();
     };
+
+    // License popup
+    document.getElementById('license-link').onclick = () => {
+        document.getElementById('license-popup').style.display = 'block';
+    };
+    document.getElementById('license-popup-close').onclick = () => {
+        document.getElementById('license-popup').style.display = 'none';
+    };
+
+    // Drag logic
+    (function () {
+        const popup = document.getElementById('license-popup');
+        const header = document.getElementById('license-popup-header');
+        let dragging = false, ox = 0, oy = 0;
+
+        header.addEventListener('mousedown', (e) => {
+            dragging = true;
+            const rect = popup.getBoundingClientRect();
+            ox = e.clientX - rect.left;
+            oy = e.clientY - rect.top;
+            popup.style.transform = 'none';
+            popup.style.left = rect.left + 'px';
+            popup.style.top = rect.top + 'px';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!dragging) return;
+            popup.style.left = (e.clientX - ox) + 'px';
+            popup.style.top  = (e.clientY - oy) + 'px';
+        });
+
+        document.addEventListener('mouseup', () => { dragging = false; });
+
+        header.addEventListener('touchstart', (e) => {
+            const t = e.touches[0];
+            const rect = popup.getBoundingClientRect();
+            dragging = true;
+            ox = t.clientX - rect.left;
+            oy = t.clientY - rect.top;
+            popup.style.transform = 'none';
+            popup.style.left = rect.left + 'px';
+            popup.style.top = rect.top + 'px';
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!dragging) return;
+            const t = e.touches[0];
+            popup.style.left = (t.clientX - ox) + 'px';
+            popup.style.top  = (t.clientY - oy) + 'px';
+        }, { passive: true });
+
+        document.addEventListener('touchend', () => { dragging = false; });
+    })();
 
     window.onload = () => {
         applyTheme(localStorage.getItem('theme') || 'light');

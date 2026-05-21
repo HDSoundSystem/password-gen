@@ -87,6 +87,7 @@ function generate() {
     }
 
     document.getElementById('password-display').innerText = result;
+    fitPassword();
     document.getElementById("qrcode").innerHTML = "";
     new QRCode(document.getElementById("qrcode"), { text: result, width: 128, height: 128 });
     passwordHistory.unshift(result); if (passwordHistory.length > 5) passwordHistory.pop();
@@ -96,7 +97,6 @@ function generate() {
 
 function updateStrength(p) {
     const bar = document.getElementById('strength-bar');
-    const t = translations[currentLang];
     let poolSize = 0;
     if (/[a-z]/.test(p)) poolSize += 26;
     if (/[A-Z]/.test(p)) poolSize += 26;
@@ -111,16 +111,15 @@ function updateStrength(p) {
     else if (entropy < 80) bar.className = "progress-bar bg-warning";
     else bar.className = "progress-bar bg-success";
 
-    const secondsToCrack = Math.pow(poolSize || 1, p.length) / 1e11; 
-    let displayTime = "";
-    if (secondsToCrack < 1) displayTime = "< 1 sec";
-    else if (secondsToCrack < 3600) displayTime = `~${Math.round(secondsToCrack / 60)} min`;
-    else if (secondsToCrack < 86400) displayTime = `~${Math.round(secondsToCrack / 3600)} ${t.units.hours}`;
-    else if (secondsToCrack < 31536000) displayTime = `~${Math.round(secondsToCrack / 86400)} ${t.units.days}`;
-    else if (secondsToCrack < 3153600000) displayTime = `~${Math.round(secondsToCrack / 31536000)} ${t.units.years}`;
-    else displayTime = `100+ ${t.units.centuries}`;
 
-    document.getElementById('crack-time-display').innerText = t.crack + displayTime;
+}
+
+function fitPassword() {
+    const el = document.getElementById('password-display');
+    el.style.fontSize = '1.1rem';
+    while (el.scrollWidth > el.clientWidth && parseFloat(el.style.fontSize) > 0.5) {
+        el.style.fontSize = (parseFloat(el.style.fontSize) - 0.05) + 'rem';
+    }
 }
 
 document.getElementById('generate-btn').onclick = generate;
@@ -194,7 +193,63 @@ function savePreference(key, value) {
     }
 }
 
-document.getElementById('qr-toggle').onclick = () => document.getElementById('qr-container').classList.toggle('d-none');
+document.getElementById('qr-toggle').onclick = () => {
+    const popup = document.getElementById('qr-popup');
+    popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+};
+
+document.getElementById('qr-popup-close').onclick = () => {
+    document.getElementById('qr-popup').style.display = 'none';
+};
+
+(function() {
+    const popup = document.getElementById('qr-popup');
+    const header = document.getElementById('qr-popup-header');
+    let dragging = false, ox = 0, oy = 0;
+
+    header.addEventListener('mousedown', (e) => {
+        dragging = true;
+        const rect = popup.getBoundingClientRect();
+        ox = e.clientX - rect.left;
+        oy = e.clientY - rect.top;
+        popup.style.transform = 'none';
+        popup.style.left = rect.left + 'px';
+        popup.style.top = rect.top + 'px';
+        header.style.cursor = 'grabbing';
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!dragging) return;
+        popup.style.left = (e.clientX - ox) + 'px';
+        popup.style.top  = (e.clientY - oy) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        dragging = false;
+        header.style.cursor = 'grab';
+    });
+
+    header.addEventListener('touchstart', (e) => {
+        const t = e.touches[0];
+        const rect = popup.getBoundingClientRect();
+        dragging = true;
+        ox = t.clientX - rect.left;
+        oy = t.clientY - rect.top;
+        popup.style.transform = 'none';
+        popup.style.left = rect.left + 'px';
+        popup.style.top = rect.top + 'px';
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+        if (!dragging) return;
+        const t = e.touches[0];
+        popup.style.left = (t.clientX - ox) + 'px';
+        popup.style.top  = (t.clientY - oy) + 'px';
+    }, { passive: true });
+
+    document.addEventListener('touchend', () => { dragging = false; });
+})();
 document.getElementById('length-slider').oninput = (e) => document.getElementById('length-val').innerText = e.target.value;
 
 window.onload = () => {
