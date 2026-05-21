@@ -2,6 +2,8 @@
   "short_name": "PswdGen",
   "name": "Password Generator",
   "description": "Secure and accessible password generator.",
+  "start_url": "https://hdsoundsystem.github.io/password-gen/",
+   "scope": "/password-gen/",
   "icons": [
   {
     "src": "img/favicon.png",
