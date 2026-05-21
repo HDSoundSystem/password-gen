@@ -195,7 +195,8 @@ function savePreference(key, value) {
 
 document.getElementById('qr-toggle').onclick = () => {
     const popup = document.getElementById('qr-popup');
-    popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+    const isHidden = getComputedStyle(popup).display === 'none';
+    popup.style.display = isHidden ? 'block' : 'none';
 };
 
 document.getElementById('qr-popup-close').onclick = () => {
@@ -216,7 +217,6 @@ document.getElementById('qr-popup-close').onclick = () => {
         popup.style.left = rect.left + 'px';
         popup.style.top = rect.top + 'px';
         header.style.cursor = 'grabbing';
-        e.preventDefault();
     });
 
     document.addEventListener('mousemove', (e) => {
