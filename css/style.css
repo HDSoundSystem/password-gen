@@ -55,9 +55,10 @@ body {
     font-family: monospace;
     font-weight: bold;
     flex-grow: 1;
-    word-break: break-all;
-    font-size: 1.1rem;
+    white-space: nowrap;
+    overflow: hidden;
     color: #0d6efd;
+    min-width: 0;
 }
 
 [data-bs-theme="dark"] #password-display {
@@ -172,4 +173,61 @@ body.high-contrast .form-range::-moz-range-thumb {
 #qrcode img {
     margin: 0 auto;
     border: 5px solid white;
+}
+/* --- QR Popup draggable --- */
+#qr-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    min-width: 180px;
+    user-select: none;
+}
+
+#qr-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    cursor: grab;
+    border-bottom: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--label);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#qr-popup-header:active {
+    cursor: grabbing;
+}
+
+#qr-popup-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-main);
+    font-size: 1rem;
+    padding: 0;
+    line-height: 1;
+}
+
+#qr-popup-body {
+    padding: 16px;
+    text-align: center;
+}
+
+#qrcode {
+    display: inline-block;
+    padding: 8px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--border);
 }
