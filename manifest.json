@@ -1,4 +1,5 @@
 {
+  "id":"PswdGen",
   "short_name": "PswdGen",
   "name": "Password Generator",
   "description": "Secure and accessible password generator.",
